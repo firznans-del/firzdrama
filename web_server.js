@@ -71,13 +71,11 @@ app.post('/api/sync-history', (req, res) => {
     res.send({ status: 'ok' });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`
-    🚀 FIRZDRAMA SERVER AKTIF!
-    -------------------------------------------
-    Akses Lokal: http://localhost:${PORT}
-    Akses WiFi : http://99.99.99.241:${PORT}
-    -------------------------------------------
-    Gunakan 'ipconfig' di CMD untuk cari IP kamu.
-    `);
-});
+// Export for Vercel
+export default app;
+
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`🚀 FIRZDRAMA SERVER AKTIF! PORT: ${PORT}`);
+    });
+}
