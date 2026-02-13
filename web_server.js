@@ -7,21 +7,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '50mb' }));
-app.use(express.static('public'));
+app.use(express.static(path.join(process.cwd(), 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'firzdrama.html'));
+    res.sendFile(path.join(process.cwd(), 'public', 'firzdrama.html'));
 });
 
-// Database paths
-const DB_USERS = path.join(__dirname, 'db_users.json');
-const DB_CHATS = path.join(__dirname, 'db_chats.json');
-const DB_LOGS = path.join(__dirname, 'db_logs.json');
-const DB_PLAYLISTS = path.join(__dirname, 'db_playlists.json');
-const DB_HISTORY = path.join(__dirname, 'db_history.json');
+// Database paths (Note: Local JSON won't persist on Vercel between restarts)
+const DB_USERS = path.join(process.cwd(), 'db_users.json');
+const DB_CHATS = path.join(process.cwd(), 'db_chats.json');
+const DB_LOGS = path.join(process.cwd(), 'db_logs.json');
+const DB_PLAYLISTS = path.join(process.cwd(), 'db_playlists.json');
+const DB_HISTORY = path.join(process.cwd(), 'db_history.json');
 
 // Helper to read/write
 const readDB = (file, def) => {
